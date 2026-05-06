@@ -1,0 +1,315 @@
+Switch>en
+Switch#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch(config)#host SW1
+SW1(config)#do show int status
+Port      Name               Status       Vlan       Duplex  Speed Type
+Fa0/1                        connected    1          auto    auto  10/100BaseTX
+Fa0/2                        connected    1          auto    auto  10/100BaseTX
+Fa0/3                        notconnect   1          auto    auto  10/100BaseTX
+Fa0/4                        notconnect   1          auto    auto  10/100BaseTX
+Fa0/5                        notconnect   1          auto    auto  10/100BaseTX
+Fa0/6                        notconnect   1          auto    auto  10/100BaseTX
+Fa0/7                        notconnect   1          auto    auto  10/100BaseTX
+Fa0/8                        notconnect   1          auto    auto  10/100BaseTX
+Fa0/9                        notconnect   1          auto    auto  10/100BaseTX
+Fa0/10                       notconnect   1          auto    auto  10/100BaseTX
+Fa0/11                       notconnect   1          auto    auto  10/100BaseTX
+Fa0/12                       notconnect   1          auto    auto  10/100BaseTX
+Fa0/13                       notconnect   1          auto    auto  10/100BaseTX
+Fa0/14                       notconnect   1          auto    auto  10/100BaseTX
+Fa0/15                       notconnect   1          auto    auto  10/100BaseTX
+Fa0/16                       notconnect   1          auto    auto  10/100BaseTX
+Fa0/17                       notconnect   1          auto    auto  10/100BaseTX
+Fa0/18                       notconnect   1          auto    auto  10/100BaseTX
+Fa0/19                       notconnect   1          auto    auto  10/100BaseTX
+Fa0/20                       notconnect   1          auto    auto  10/100BaseTX
+Fa0/21                       notconnect   1          auto    auto  10/100BaseTX
+Fa0/22                       notconnect   1          auto    auto  10/100BaseTX
+Fa0/23                       notconnect   1          auto    auto  10/100BaseTX
+Fa0/24                       notconnect   1          auto    auto  10/100BaseTX
+Gig0/1                       notconnect   1          auto    auto  10/100BaseTX
+Gig0/2                       connected    1          auto    auto  10/100BaseTX
+
+SW1(config)#int g0/1
+SW1(config-if)#speed 1000
+SW1(config-if)#duplex full
+SW1(config-if)#
+%LINK-5-CHANGED: Interface GigabitEthernet0/1, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/1, changed state to up
+
+SW1(config-if)#description ## to R! ##
+SW1(config-if)#description ## to R1 ##
+SW1(config-if)#int g0/2
+SW1(config-if)#speed 1000
+SW1(config-if)#duplex full
+SW1(config-if)#
+%LINK-3-UPDOWN: Interface GigabitEthernet0/2, changed state to down
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/2, changed state to down
+
+SW1(config-if)#description ## to SW2 ##
+SW1(config-if)#
+SW1(config-if)#int range f0/1 - 2
+SW1(config-if-range)#desc ## to end hosts ##
+SW1(config-if-range)#
+SW1(config-if-range)#int range f0/3 - 24
+SW1(config-if-range)#dess ## not in use ##
+                        ^
+% Invalid input detected at '^' marker.
+	
+SW1(config-if-range)#desc ## not in use ##
+SW1(config-if-range)#shutdown
+
+%LINK-5-CHANGED: Interface FastEthernet0/3, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/4, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/5, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/6, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/7, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/8, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/9, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/10, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/11, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/12, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/13, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/14, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/15, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/16, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/17, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/18, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/19, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/20, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/21, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/22, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/23, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/24, changed state to administratively down
+SW1(config-if-range)#do show int status
+Port      Name               Status       Vlan       Duplex  Speed Type
+Fa0/1     ## to end hosts ## connected    1          auto    auto  10/100BaseTX
+Fa0/2     ## to end hosts ## connected    1          auto    auto  10/100BaseTX
+Fa0/3     ## not in use ##   disabled 1          auto    auto  10/100BaseTX
+Fa0/4     ## not in use ##   disabled 1          auto    auto  10/100BaseTX
+Fa0/5     ## not in use ##   disabled 1          auto    auto  10/100BaseTX
+Fa0/6     ## not in use ##   disabled 1          auto    auto  10/100BaseTX
+Fa0/7     ## not in use ##   disabled 1          auto    auto  10/100BaseTX
+Fa0/8     ## not in use ##   disabled 1          auto    auto  10/100BaseTX
+Fa0/9     ## not in use ##   disabled 1          auto    auto  10/100BaseTX
+Fa0/10    ## not in use ##   disabled 1          auto    auto  10/100BaseTX
+Fa0/11    ## not in use ##   disabled 1          auto    auto  10/100BaseTX
+Fa0/12    ## not in use ##   disabled 1          auto    auto  10/100BaseTX
+Fa0/13    ## not in use ##   disabled 1          auto    auto  10/100BaseTX
+Fa0/14    ## not in use ##   disabled 1          auto    auto  10/100BaseTX
+Fa0/15    ## not in use ##   disabled 1          auto    auto  10/100BaseTX
+Fa0/16    ## not in use ##   disabled 1          auto    auto  10/100BaseTX
+Fa0/17    ## not in use ##   disabled 1          auto    auto  10/100BaseTX
+Fa0/18    ## not in use ##   disabled 1          auto    auto  10/100BaseTX
+Fa0/19    ## not in use ##   disabled 1          auto    auto  10/100BaseTX
+Fa0/20    ## not in use ##   disabled 1          auto    auto  10/100BaseTX
+Fa0/21    ## not in use ##   disabled 1          auto    auto  10/100BaseTX
+Fa0/22    ## not in use ##   disabled 1          auto    auto  10/100BaseTX
+Fa0/23    ## not in use ##   disabled 1          auto    auto  10/100BaseTX
+Fa0/24    ## not in use ##   disabled 1          auto    auto  10/100BaseTX
+Gig0/1    ## to R1 ##        connected    1          a-full  a-100010/100BaseTX
+Gig0/2    ## to SW2 ##       notconnect   1          a-full  a-100010/100BaseTX
+
+SW1(config-if-range)#end
+SW1#
+%SYS-5-CONFIG_I: Configured from console by console
+
+SW1#wr
+Building configuration...
+[OK]
+SW1#show startup congig
+                 ^
+% Invalid input detected at '^' marker.
+	
+SW1#show startup config
+                 ^
+% Invalid input detected at '^' marker.
+	
+SW1#show startup-config
+Using 2122 bytes
+!
+version 12.2
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname SW1
+!
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+interface FastEthernet0/1
+ description ## to end hosts ##
+!
+interface FastEthernet0/2
+ description ## to end hosts ##
+
+SW1#show startup-config
+Using 2122 bytes
+!
+version 12.2
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname SW1
+!
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+interface FastEthernet0/1
+ description ## to end hosts ##
+!
+interface FastEthernet0/2
+ description ## to end hosts ##
+!
+interface FastEthernet0/3
+ description ## not in use ##
+ shutdown
+!
+interface FastEthernet0/4
+ description ## not in use ##
+ shutdown
+!
+interface FastEthernet0/5
+ description ## not in use ##
+ shutdown
+!
+interface FastEthernet0/6
+ description ## not in use ##
+ shutdown
+!
+interface FastEthernet0/7
+ description ## not in use ##
+ shutdown
+!
+interface FastEthernet0/8
+ description ## not in use ##
+ shutdown
+!
+interface FastEthernet0/9
+ description ## not in use ##
+ shutdown
+!
+interface FastEthernet0/10
+ description ## not in use ##
+ shutdown
+!
+interface FastEthernet0/11
+ description ## not in use ##
+ shutdown
+!
+interface FastEthernet0/12
+ description ## not in use ##
+ shutdown
+!
+interface FastEthernet0/13
+ description ## not in use ##
+ shutdown
+!
+interface FastEthernet0/14
+ description ## not in use ##
+ shutdown
+!
+interface FastEthernet0/15
+ description ## not in use ##
+ shutdown
+!
+interface FastEthernet0/16
+ description ## not in use ##
+ shutdown
+!
+interface FastEthernet0/17
+ description ## not in use ##
+ shutdown
+!
+interface FastEthernet0/18
+ description ## not in use ##
+ shutdown
+!
+interface FastEthernet0/19
+ description ## not in use ##
+ shutdown
+!
+interface FastEthernet0/20
+ description ## not in use ##
+ shutdown
+!
+interface FastEthernet0/21
+ description ## not in use ##
+ shutdown
+!
+interface FastEthernet0/22
+ description ## not in use ##
+ shutdown
+!
+interface FastEthernet0/23
+ description ## not in use ##
+ shutdown
+!
+interface FastEthernet0/24
+ description ## not in use ##
+ shutdown
+!
+interface GigabitEthernet0/1
+ description ## to R1 ##
+ duplex full
+ speed 1000
+!
+interface GigabitEthernet0/2
+ description ## to SW2 ##
+ duplex full
+ speed 1000
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+!
+!
+!
+line con 0
+!
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+!
+!
+!
+end
