@@ -1,0 +1,151 @@
+SW1>en
+SW1#sh span-tree
+           ^
+% Invalid input detected at '^' marker.
+	
+SW1#sh spanning-tree
+VLAN0001
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    32769
+             Address     0005.5E4E.714B
+             This bridge is the root
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+             Address     0005.5E4E.714B
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  20
+
+Interface        Role Sts Cost      Prio.Nbr Type
+---------------- ---- --- --------- -------- --------------------------------
+Fa0/24           Desg FWD 19        128.24   Shr
+Fa0/1            Desg FWD 19        128.1    P2p
+Fa0/2            Desg FWD 19        128.2    Shr
+Fa0/3            Back BLK 19        128.3    Shr
+
+SW1#
+
+
+
+
+
+
+
+
+SW1 con0 is now available
+
+
+
+
+
+
+Press RETURN to get started.
+
+
+
+
+
+
+
+
+
+
+
+
+
+SW1>en
+SW1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+SW1(config)#int range f0/1 - 2
+SW1(config-if-range)#spanning-tree link-type point-to-point
+SW1(config-if-range)#int f0/24
+SW1(config-if)#spannig-tree portfast
+                     ^
+% Invalid input detected at '^' marker.
+	
+SW1(config-if)#spanning-tree portfast
+%Warning: portfast should only be enabled on ports connected to a single
+host. Connecting hubs, concentrators, switches, bridges, etc... to this
+interface  when portfast is enabled, can cause temporary bridging loops.
+Use with CAUTION
+
+%Portfast has been configured on FastEthernet0/24 but will only
+have effect when the interface is in a non-trunking mode.
+SW1(config-if)#do sh span
+VLAN0001
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    32769
+             Address     0005.5E4E.714B
+             This bridge is the root
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+             Address     0005.5E4E.714B
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  20
+
+Interface        Role Sts Cost      Prio.Nbr Type
+---------------- ---- --- --------- -------- --------------------------------
+Fa0/24           Desg FWD 19        128.24   Shr
+Fa0/1            Desg FWD 19        128.1    P2p
+Fa0/2            Desg FWD 19        128.2    P2p
+Fa0/3            Desg FWD 19        128.3    Shr
+
+SW1(config-if)#conf t
+                ^
+% Invalid input detected at '^' marker.
+	
+SW1(config-if)#int f0/24
+SW1(config-if)#span portfast
+%Warning: portfast should only be enabled on ports connected to a single
+host. Connecting hubs, concentrators, switches, bridges, etc... to this
+interface  when portfast is enabled, can cause temporary bridging loops.
+Use with CAUTION
+
+%Portfast has been configured on FastEthernet0/24 but will only
+have effect when the interface is in a non-trunking mode.
+SW1(config-if)#do sh span
+VLAN0001
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    32769
+             Address     0005.5E4E.714B
+             This bridge is the root
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+             Address     0005.5E4E.714B
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  20
+
+Interface        Role Sts Cost      Prio.Nbr Type
+---------------- ---- --- --------- -------- --------------------------------
+Fa0/24           Desg FWD 19        128.24   Shr
+Fa0/1            Desg FWD 19        128.1    P2p
+Fa0/2            Desg FWD 19        128.2    P2p
+Fa0/3            Desg FWD 19        128.3    Shr
+
+SW1(config-if)#int f0/2
+SW1(config-if)#no span type-link point-to-point
+                       ^
+% Invalid input detected at '^' marker.
+	
+SW1(config-if)#spanning-tree link-type shared
+SW1(config-if)#do sh span
+VLAN0001
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    32769
+             Address     0005.5E4E.714B
+             This bridge is the root
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+             Address     0005.5E4E.714B
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  20
+
+Interface        Role Sts Cost      Prio.Nbr Type
+---------------- ---- --- --------- -------- --------------------------------
+Fa0/24           Desg FWD 19        128.24   Shr
+Fa0/1            Desg FWD 19        128.1    P2p
+Fa0/2            Desg FWD 19        128.2    Shr
+Fa0/3            Back BLK 19        128.3    Shr
