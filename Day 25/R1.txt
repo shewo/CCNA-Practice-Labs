@@ -1,0 +1,151 @@
+Router>en
+Router#sh ip int br
+Interface              IP-Address      OK? Method Status                Protocol 
+GigabitEthernet0/0     unassigned      YES unset  administratively down down 
+FastEthernet1/0        unassigned      YES unset  administratively down down 
+FastEthernet2/0        unassigned      YES unset  administratively down down
+Router#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#int ?
+  Dialer            Dialer interface
+  Ethernet          IEEE 802.3
+  FastEthernet      FastEthernet IEEE 802.3
+  GigabitEthernet   GigabitEthernet IEEE 802.3z
+  Loopback          Loopback interface
+  Serial            Serial
+  Virtual-Template  Virtual Template interface
+  range             interface range command
+Router(config)#int 
+% Incomplete command.
+Router(config)#interface 1 ?
+% Unrecognized command
+Router(config)#interfase 1 ?
+% Unrecognized command
+Router(config)#interfase 1 0
+                      ^
+% Invalid input detected at '^' marker.
+	
+Router(config)#interface 1 ?
+% Unrecognized command
+Router(config)#interfase 1?
+% Unrecognized command
+Router(config)#interface 1 0
+                         ^
+% Invalid input detected at '^' marker.
+	
+Router(config)#interface l
+% Incomplete command.
+Router(config)#interface l ?
+  <0-2147483647>  Loopback interface number
+Router(config)#interface l 0
+
+Router(config-if)#
+%LINK-5-CHANGED: Interface Loopback0, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface Loopback0, changed state to up
+
+Router(config-if)#
+Router(config-if)#ip add 1.1.1.1 255.255.255.255
+Router(config-if)#
+Router(config-if)#do sh ip int br
+Interface              IP-Address      OK? Method Status                Protocol 
+GigabitEthernet0/0     unassigned      YES unset  administratively down down 
+FastEthernet1/0        unassigned      YES unset  administratively down down 
+FastEthernet2/0        unassigned      YES unset  administratively down down 
+Loopback0              1.1.1.1         YES manual up                    up
+Router(config-if)#
+
+
+
+
+
+
+
+
+Router con0 is now available
+
+
+
+
+
+
+Press RETURN to get started.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Router>en\
+Translating "en\"...domain server (255.255.255.255)
+% Unknown command or computer name, or unable to find computer address
+
+Router>en
+Router#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#router l0
+                      ^
+% Invalid input detected at '^' marker.
+	
+Router(config)#interface l0
+Router(config-if)#
+Router(config-if)#router eigrp 100
+Router(config-router)#net 10.0.12.0 0.0.0.3
+Router(config-router)#net 1.1.1.1 0.0.0.0
+Router(config-router)#no auto-summary
+Router(config-router)#passive-interface l0
+Router(config-router)#do sh ip prot
+
+Routing Protocol is "eigrp  100 " 
+  Outgoing update filter list for all interfaces is not set 
+  Incoming update filter list for all interfaces is not set 
+  Default networks flagged in outgoing updates  
+  Default networks accepted from incoming updates 
+  EIGRP metric weight K1=1, K2=0, K3=1, K4=0, K5=0
+  EIGRP maximum hopcount 100
+  EIGRP maximum metric variance 1
+Redistributing: eigrp 100
+  Automatic network summarization is not in effect  
+  Maximum path: 4
+  Routing for Networks:  
+     10.0.12.0/30
+     1.1.1.1/32
+  Passive Interface(s): 
+    Loopback0
+  Routing Information Sources:  
+    Gateway         Distance      Last Update 
+  Distance: internal 90 external 170
+
+Router(config-router)#net 10.0.13.0 0.0.0.3
+Router(config-router)#do sh ip prot
+
+Routing Protocol is "eigrp  100 " 
+  Outgoing update filter list for all interfaces is not set 
+  Incoming update filter list for all interfaces is not set 
+  Default networks flagged in outgoing updates  
+  Default networks accepted from incoming updates 
+  EIGRP metric weight K1=1, K2=0, K3=1, K4=0, K5=0
+  EIGRP maximum hopcount 100
+  EIGRP maximum metric variance 1
+Redistributing: eigrp 100
+  Automatic network summarization is not in effect  
+  Maximum path: 4
+  Routing for Networks:  
+     10.0.12.0/30
+     1.1.1.1/32
+     10.0.13.0/30
+  Passive Interface(s): 
+    Loopback0
+  Routing Information Sources:  
+    Gateway         Distance      Last Update 
+  Distance: internal 90 external 170
+
+Router(config-router)#do sh ip eigrp neighbors
+IP-EIGRP neighbors for process 100

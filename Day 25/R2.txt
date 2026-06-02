@@ -1,0 +1,56 @@
+
+Router>
+Router>en
+Router#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#int l0
+
+Router(config-if)#
+%LINK-5-CHANGED: Interface Loopback0, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface Loopback0, changed state to up
+
+Router(config-if)#
+Router(config-if)#ip add 2.2.2.2 255.255.255.255
+Router(config-if)#
+Router(config-if)#router eigrp 100
+Router(config-router)#net 10.0.12.0 0.0.0.3
+Router(config-router)#net 10.0.24.0 0.0.0.3
+Router(config-router)#
+Router(config-router)#net 2.2.2.2 0.0.0.0
+Router(config-router)#no auto-summery
+                                  ^
+% Invalid input detected at '^' marker.
+	
+Router(config-router)#no auto summary
+Router(config-router)#passive interface l0
+                              ^
+% Invalid input detected at '^' marker.
+	
+Router(config-router)#passive interface l0
+                              ^
+% Invalid input detected at '^' marker.
+	
+Router(config-router)#passive-interface l0
+Router(config-router)#do sh ip proto
+
+Routing Protocol is "eigrp  100 " 
+  Outgoing update filter list for all interfaces is not set 
+  Incoming update filter list for all interfaces is not set 
+  Default networks flagged in outgoing updates  
+  Default networks accepted from incoming updates 
+  EIGRP metric weight K1=1, K2=0, K3=1, K4=0, K5=0
+  EIGRP maximum hopcount 100
+  EIGRP maximum metric variance 1
+Redistributing: eigrp 100
+  Automatic network summarization is not in effect  
+  Maximum path: 4
+  Routing for Networks:  
+     10.0.12.0/30
+     10.0.24.0/30
+     2.2.2.2/32
+  Passive Interface(s): 
+    Loopback0
+  Routing Information Sources:  
+    Gateway         Distance      Last Update 
+  Distance: internal 90 external 170
