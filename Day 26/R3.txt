@@ -1,0 +1,111 @@
+Router>en
+Router#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#int f1/0
+Router(config-if)#ip add 10.0.13.2 255.255.255.252
+Router(config-if)#no shut
+
+Router(config-if)#
+%LINK-5-CHANGED: Interface FastEthernet1/0, changed state to up
+
+Router(config-if)#int f2/0
+Router(config-if)#ip add 10.0.34.1 255.255.255.252
+Router(config-if)#no shut
+
+Router(config-if)#
+%LINK-5-CHANGED: Interface FastEthernet2/0, changed state to up
+
+Router(config-if)#
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet2/0, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet1/0, changed state to up
+
+
+
+
+
+
+
+
+
+Router con0 is now available
+
+
+
+
+
+
+Press RETURN to get started.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Router>en
+Router#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)# \
+                ^
+% Invalid input detected at '^' marker.
+	
+Router(config)#
+Router(config)#int l0
+
+Router(config-if)#
+%LINK-3-UPDOWN: Interface Loopback0, changed state to down
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface Loopback0, changed state to up
+
+Router(config-if)#ip add 3.3.3.3 255.255.255.255
+Router(config-if)#router ospf 3
+Router(config-router)#network 10.013.2 0.0.0.0 area 0
+                              ^
+% Invalid input detected at '^' marker.
+	
+Router(config-router)#net 10.0.13.2 0.0.0.0 area 0
+Router(config-router)#net 10.0.34.1 0.0.0.0 area0
+                                                ^
+% Invalid input detected at '^' marker.
+	
+Router(config-router)#net 10.0.34.1 0.0.0.0 area 0
+Router(config-router)#net 3.3.3.3 
+21:05:31: %OSPF-5-ADJCHG: Process 3, Nbr 4.4.4.4 on FastEthernet2/0 from LOADING to FULL, L
+Router(config-router)#
+Router(config-router)#net 3.3.3.3 0.0.0.0 area 0
+Router(config-router)#passive-interface l0
+Router(config-router)#
+21:10:33: %OSPF-5-ADJCHG: Process 3, Nbr 1.1.1.1 on FastEthernet1/0 from LOADING to FULL, Loading Done
+
+Router(config-router)#do sh ip route
+Codes: C - connected, S - static, I - IGRP, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - IS-IS, L1 - IS-IS level-1, L2 - IS-IS level-2, ia - IS-IS inter area
+       * - candidate default, U - per-user static route, o - ODR
+       P - periodic downloaded static route
+
+Gateway of last resort is 10.0.13.1 to network 0.0.0.0
+
+     2.0.0.0/32 is subnetted, 1 subnets
+O       2.2.2.2 [110/3] via 10.0.13.1, 00:05:37, FastEthernet1/0
+                [110/3] via 10.0.34.2, 00:05:37, FastEthernet2/0
+     3.0.0.0/32 is subnetted, 1 subnets
+C       3.3.3.3 is directly connected, Loopback0
+     4.0.0.0/32 is subnetted, 1 subnets
+O       4.4.4.4 [110/2] via 10.0.34.2, 00:10:41, FastEthernet2/0
+     10.0.0.0/30 is subnetted, 4 subnets
+O       10.0.12.0 [110/2] via 10.0.13.1, 00:05:37, FastEthernet1/0
+C       10.0.13.0 is directly connected, FastEthernet1/0
+O       10.0.24.0 [110/2] via 10.0.34.2, 00:08:08, FastEthernet2/0
+C       10.0.34.0 is directly connected, FastEthernet2/0
+O    192.168.4.0/24 [110/2] via 10.0.34.2, 00:10:41, FastEthernet2/0
+O*E2 0.0.0.0/0 [110/1] via 10.0.13.1, 00:03:44, FastEthernet1/0
