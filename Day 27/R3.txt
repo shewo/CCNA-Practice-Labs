@@ -1,0 +1,100 @@
+Router>en
+Router#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#int l0
+
+Router(config-if)#
+%LINK-3-UPDOWN: Interface Loopback0, changed state to down
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface Loopback0, changed state to up
+
+Router(config-if)#ip add 3.3.3.3 255.255.255.255
+Router(config-if)#
+Router(config-if)#int f1/0
+Router(config-if)#ip add 10.0.13.2  255.255.255.252
+Router(config-if)#no shut
+
+Router(config-if)#
+%LINK-5-CHANGED: Interface FastEthernet1/0, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet1/0, changed state to up
+
+Router(config-if)#int f2/0
+Router(config-if)#ip add 10.0.34.1 255.255.255.252
+Router(config-if)#no shut
+
+Router(config-if)#
+%LINK-5-CHANGED: Interface FastEthernet2/0, changed state to up
+
+Router(config-if)#exit
+Router(config)#hostname R3
+R3(config)#int range f1/0, f2/0, l0
+R3(config-if-range)#ip ospf 1 area 0
+R3(config-if-range)#router ospf 1
+R3(config-router)#passi
+21:12:35: %OSPF-5-ADJCHG: Process 1, Nbr 1.1.1.1 on FastEthernet1/0 from LOADING to FULL, Loading Done
+
+% Incomplete command.
+R3(config-router)#passive-interface l0
+R3(config-router)#
+
+
+
+
+
+
+
+
+R3 con0 is now available
+
+
+
+
+
+
+Press RETURN to get started.
+
+
+
+
+
+
+
+
+
+
+
+
+
+R3>en
+R3#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R3(config)#router ospf 1
+R3(config-router)#auto-cost bandwidth 10000
+                            ^
+% Invalid input detected at '^' marker.
+	
+R3(config-router)#auto-cost reference bandwidth 10000
+                                      ^
+% Invalid input detected at '^' marker.
+	
+R3(config-router)#auto-cost reference-bandwidth 10000
+% OSPF: Reference bandwidth is changed.
+        Please ensure reference bandwidth is consistent across all routers.
+R3(config-router)#
+
+
+
+
+
+
+
+
+R3 con0 is now available
+
+
+
+
+
+
+Press RETURN to get started.

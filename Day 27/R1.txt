@@ -1,0 +1,117 @@
+Router>en
+Router#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#hostname R1
+R1(config)#int l0
+
+R1(config-if)#
+%LINK-3-UPDOWN: Interface Loopback0, changed state to down
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface Loopback0, changed state to up
+
+R1(config-if)#ip add 1.1.1.1 255.255.255.255
+R1(config-if)#int g3/0
+R1(config-if)#ip add 203.0.113.1 255.255.255.252
+R1(config-if)#no shut
+
+R1(config-if)#
+%LINK-5-CHANGED: Interface GigabitEthernet3/0, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet3/0, changed state to up
+
+R1(config-if)#
+R1(config-if)#int g0/0
+R1(config-if)#ip add 10.0.12.1 255.2555.255.252
+                               ^
+% Invalid input detected at '^' marker.
+	
+R1(config-if)#ip add 10.0.12.1 255.255.255.252
+R1(config-if)#no shut
+
+R1(config-if)#
+%LINK-5-CHANGED: Interface GigabitEthernet0/0, changed state to up
+
+R1(config-if)#int f1/0
+R1(config-if)#ip add 10.0.13.1 255.255.255.252
+R1(config-if)#no shut
+
+R1(config-if)#
+%LINK-5-CHANGED: Interface FastEthernet1/0, changed state to up
+
+R1(config-if)#
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet1/0, changed state to up
+
+R1(config-if)#int range g0/0, f1/0, l0
+R1(config-if-range)#ip ospf 1 area 0
+R1(config-if-range)#do sh ip proto
+
+Routing Protocol is "ospf 1"
+  Outgoing update filter list for all interfaces is not set 
+  Incoming update filter list for all interfaces is not set 
+  Router ID 1.1.1.1
+  Number of areas in this router is 1. 1 normal 0 stub 0 nssa
+  Maximum path: 4
+  Routing for Networks:
+  Routing Information Sources:  
+    Gateway         Distance      Last Update 
+    1.1.1.1              110      00:00:13
+  Distance: (default is 110)
+
+R1(config-if-range)#router ospf 1
+R1(config-router)#passive-interface l0
+R1(config-router)#
+21:01:56: %OSPF-5-ADJCHG: Process 1, Nbr 2.2.2.2 on GigabitEthernet0/0 from LOADING to FULL, Loading Done
+
+21:03:27: %OSPF-5-ADJCHG: Process 1, Nbr 3.3.3.3 on FastEthernet1/0 from LOADING to FULL, Loading Done
+
+
+
+
+
+
+
+
+
+R1 con0 is now available
+
+
+
+
+
+
+Press RETURN to get started.
+
+
+
+
+
+
+
+
+
+
+
+
+
+R1>en
+R1#conf rt
+        ^
+% Invalid input detected at '^' marker.
+	
+R1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#router ospf 1
+R1(config-router)#auto-cost reference-bandwidth 10000
+% OSPF: Reference bandwidth is changed.
+        Please ensure reference bandwidth is consistent across all routers.
+R1(config-router)#defalt-information originate
+                      ^
+% Invalid input detected at '^' marker.
+	
+R1(config-router)#default-information originate
+R1(config-router)#ip route 0.0.0.0 0.0.0.0 203.0.113.2
+R1(config)#
+R1#
+%SYS-5-CONFIG_I: Configured from console by console
