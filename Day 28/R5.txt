@@ -1,0 +1,66 @@
+R5>en
+R5#sh ip ospf int g0/0
+
+GigabitEthernet0/0 is up, line protocol is up
+  Internet address is 192.168.245.3/29, Area 0
+  Process ID 1, Router ID 203.0.113.1, Network Type BROADCAST, Cost: 1
+  Transmit Delay is 1 sec, State DR, Priority 1
+  Designated Router (ID) 203.0.113.1, Interface address 192.168.245.3
+  No backup designated router on this network
+  Timer intervals configured, Hello 5, Dead 20, Wait 20, Retransmit 5
+    Hello due in 00:00:04
+  Index 1/1, flood queue length 0
+  Next 0x0(0)/0x0(0)
+  Last flood scan length is 1, maximum is 1
+  Last flood scan time is 0 msec, maximum is 0 msec
+  Neighbor Count is 0, Adjacent neighbor count is 0
+  Suppress hello for 0 neighbor(s)
+R5#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R5(config)#int g0/0
+R5(config-if)#no ip ospf hello-interval
+R5(config-if)#no ip ospf dead-interval
+R5(config-if)#
+20:51:55: %OSPF-5-ADJCHG: Process 1, Nbr 192.168.245.1 on GigabitEthernet0/0 from LOADING to FULL, Loading Done
+
+20:51:55: %OSPF-5-ADJCHG: Process 1, Nbr 192.168.245.2 on GigabitEthernet0/0 from LOADING to FULL, Loading Done
+
+R5(config-if)#do sh ip ospf neigh
+
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+192.168.245.1     1   FULL/BDR        00:00:36    192.168.245.1   GigabitEthernet0/0
+192.168.245.2     1   FULL/DROTHER    00:00:36    192.168.245.2   GigabitEthernet0/0
+R5(config-if)#do sh run | section ospf
+router ospf 1
+ log-adjacency-changes
+ network 192.168.245.3 0.0.0.0 area 0
+ default-information originate
+R5(config-if)#do sh ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - IS-IS, L1 - IS-IS level-1, L2 - IS-IS level-2, ia - IS-IS inter area
+       * - candidate default, U - per-user static route, o - ODR
+       P - periodic downloaded static route
+
+Gateway of last resort is not set
+
+     10.0.0.0/24 is subnetted, 2 subnets
+O       10.0.1.0/24 [110/66] via 192.168.245.1, 00:01:47, GigabitEthernet0/0
+O       10.0.2.0/24 [110/3] via 192.168.245.2, 00:01:47, GigabitEthernet0/0
+     192.168.12.0/30 is subnetted, 1 subnets
+O       192.168.12.0/30 [110/65] via 192.168.245.1, 00:01:47, GigabitEthernet0/0
+     192.168.34.0/30 is subnetted, 1 subnets
+O       192.168.34.0/30 [110/2] via 192.168.245.2, 00:01:47, GigabitEthernet0/0
+     192.168.245.0/24 is variably subnetted, 2 subnets, 2 masks
+C       192.168.245.0/29 is directly connected, GigabitEthernet0/0
+L       192.168.245.3/32 is directly connected, GigabitEthernet0/0
+     203.0.113.0/24 is variably subnetted, 2 subnets, 2 masks
+C       203.0.113.0/30 is directly connected, GigabitEthernet0/0/0
+L       203.0.113.1/32 is directly connected, GigabitEthernet0/0/0
+
+R5(config-if)#exit
+R5(config)#ip route 0.0.0.0 0.0.0.0 203.0.113.2
+R5(config)#

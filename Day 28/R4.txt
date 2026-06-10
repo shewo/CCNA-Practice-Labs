@@ -1,0 +1,91 @@
+R4>en
+R4#sh ip ospf neigh
+
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+192.168.245.1     1   FULL/BDR        00:00:36    192.168.245.1   GigabitEthernet0/0
+192.168.34.1      1   FULL/BDR        00:00:36    192.168.34.1    GigabitEthernet0/1
+R4#sh ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - IS-IS, L1 - IS-IS level-1, L2 - IS-IS level-2, ia - IS-IS inter area
+       * - candidate default, U - per-user static route, o - ODR
+       P - periodic downloaded static route
+
+Gateway of last resort is not set
+
+     10.0.0.0/24 is subnetted, 1 subnets
+O       10.0.1.0/24 [110/66] via 192.168.245.1, 00:02:35, GigabitEthernet0/0
+     192.168.12.0/30 is subnetted, 1 subnets
+O       192.168.12.0/30 [110/65] via 192.168.245.1, 00:05:16, GigabitEthernet0/0
+     192.168.34.0/24 is variably subnetted, 2 subnets, 2 masks
+C       192.168.34.0/30 is directly connected, GigabitEthernet0/1
+L       192.168.34.2/32 is directly connected, GigabitEthernet0/1
+     192.168.245.0/24 is variably subnetted, 2 subnets, 2 masks
+C       192.168.245.0/29 is directly connected, GigabitEthernet0/0
+L       192.168.245.2/32 is directly connected, GigabitEthernet0/0
+
+R4#sh ip ospf int g0/1
+
+GigabitEthernet0/1 is up, line protocol is up
+  Internet address is 192.168.34.2/30, Area 0
+  Process ID 1, Router ID 192.168.245.2, Network Type BROADCAST, Cost: 1
+  Transmit Delay is 1 sec, State DR, Priority 1
+  Designated Router (ID) 192.168.245.2, Interface address 192.168.34.2
+  Backup Designated Router (ID) 192.168.34.1, Interface address 192.168.34.1
+  Timer intervals configured, Hello 10, Dead 40, Wait 40, Retransmit 5
+    Hello due in 00:00:08
+  Index 2/2, flood queue length 0
+  Next 0x0(0)/0x0(0)
+  Last flood scan length is 1, maximum is 1
+  Last flood scan time is 0 msec, maximum is 0 msec
+  Neighbor Count is 1, Adjacent neighbor count is 1
+    Adjacent with neighbor 192.168.34.1  (Backup Designated Router)
+  Suppress hello for 0 neighbor(s)
+R4#
+20:47:41: %OSPF-5-ADJCHG: Process 1, Nbr 192.168.34.1 on GigabitEthernet0/1 from LOADING to FULL, Loading Done
+
+R4#sh ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - IS-IS, L1 - IS-IS level-1, L2 - IS-IS level-2, ia - IS-IS inter area
+       * - candidate default, U - per-user static route, o - ODR
+       P - periodic downloaded static route
+
+Gateway of last resort is not set
+
+     10.0.0.0/24 is subnetted, 2 subnets
+O       10.0.1.0/24 [110/66] via 192.168.245.1, 00:04:40, GigabitEthernet0/0
+O       10.0.2.0/24 [110/2] via 192.168.34.1, 00:00:13, GigabitEthernet0/1
+     192.168.12.0/30 is subnetted, 1 subnets
+O       192.168.12.0/30 [110/65] via 192.168.245.1, 00:07:21, GigabitEthernet0/0
+     192.168.34.0/24 is variably subnetted, 2 subnets, 2 masks
+C       192.168.34.0/30 is directly connected, GigabitEthernet0/1
+L       192.168.34.2/32 is directly connected, GigabitEthernet0/1
+     192.168.245.0/24 is variably subnetted, 2 subnets, 2 masks
+C       192.168.245.0/29 is directly connected, GigabitEthernet0/0
+L       192.168.245.2/32 is directly connected, GigabitEthernet0/0
+
+R4#sh ip ospf int g0/0
+
+GigabitEthernet0/0 is up, line protocol is up
+  Internet address is 192.168.245.2/29, Area 0
+  Process ID 1, Router ID 192.168.245.2, Network Type BROADCAST, Cost: 1
+  Transmit Delay is 1 sec, State DR, Priority 1
+  Designated Router (ID) 192.168.245.2, Interface address 192.168.245.2
+  Backup Designated Router (ID) 192.168.245.1, Interface address 192.168.245.1
+  Timer intervals configured, Hello 10, Dead 40, Wait 40, Retransmit 5
+    Hello due in 00:00:01
+  Index 1/1, flood queue length 0
+  Next 0x0(0)/0x0(0)
+  Last flood scan length is 1, maximum is 1
+  Last flood scan time is 0 msec, maximum is 0 msec
+  Neighbor Count is 1, Adjacent neighbor count is 1
+    Adjacent with neighbor 192.168.245.1  (Backup Designated Router)
+  Suppress hello for 0 neighbor(s)
+R4#
+20:51:55: %OSPF-5-ADJCHG: Process 1, Nbr 203.0.113.1 on GigabitEthernet0/0 from LOADING to FULL, Loading Done
