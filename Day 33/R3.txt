@@ -1,0 +1,22 @@
+R3>en
+R3#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R3(config)#ipv6 unicast-routing
+R3(config)#do sh ipv6 int br
+GigabitEthernet0/0         [up/up]
+    FE80::290:2BFF:FECC:A101
+    2001:DB8:0:3::1
+GigabitEthernet0/1         [up/up]
+    FE80::290:2BFF:FECC:A102
+    2001:DB8:0:13::2
+GigabitEthernet0/2         [administratively down/down]
+    unassigned
+Serial0/0/0                [up/up]
+    FE80::290:2BFF:FECC:A101
+Serial0/0/1                [administratively down/down]
+    unassigned
+Vlan1                      [administratively down/down]
+    unassigned
+R3(config)#ipv6 route 2001:db8:0:1::/64 g0/1 2001:db8:0:13::1
+R3(config)#ipv6 route 2001:db8:0:1::/64 s0/0/0 FE80::20B:BEFF:FED7:4901 5
+R3(config)#

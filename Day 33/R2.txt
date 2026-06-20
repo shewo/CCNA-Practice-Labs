@@ -1,0 +1,48 @@
+R2>en
+R2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R2(config)#ipv6 unicast-routing
+R2(config)#do sh ipv6 int br
+GigabitEthernet0/0         [administratively down/down]
+    unassigned
+GigabitEthernet0/1         [administratively down/down]
+    unassigned
+GigabitEthernet0/2         [administratively down/down]
+    unassigned
+Serial0/0/0                [up/up]
+    FE80::20B:BEFF:FED7:4901
+Serial0/0/1                [up/up]
+    FE80::20B:BEFF:FED7:4901
+Vlan1                      [administratively down/down]
+    unassigned
+R2(config)#ipv6 route 2001:db8:0:1::/64 s0/0/0 FE80::202:4AFF:FE23:E201
+R2(config)#ipv6 route 2001:db8:0:3::/64 s0/0/1 FE80::290:2BFF:FECC:A101 
+R2(config)#do sh ipv6 route
+IPv6 Routing Table - 3 entries
+Codes: C - Connected, L - Local, S - Static, R - RIP, B - BGP
+       U - Per-user Static route, M - MIPv6
+       I1 - ISIS L1, I2 - ISIS L2, IA - ISIS interarea, IS - ISIS summary
+       ND - ND Default, NDp - ND Prefix, DCE - Destination, NDr - Redirect
+       O - OSPF intra, OI - OSPF inter, OE1 - OSPF ext 1, OE2 - OSPF ext 2
+       ON1 - OSPF NSSA ext 1, ON2 - OSPF NSSA ext 2
+       D - EIGRP, EX - EIGRP external
+S   2001:DB8:0:1::/64 [1/0]
+     via FE80::202:4AFF:FE23:E201, Serial0/0/0
+S   2001:DB8:0:3::/64 [1/0]
+     via FE80::290:2BFF:FECC:A101, Serial0/0/1
+L   FF00::/8 [0/0]
+     via Null0, receive
+R2(config)#do sh ipv6 int   br
+GigabitEthernet0/0         [administratively down/down]
+    unassigned
+GigabitEthernet0/1         [administratively down/down]
+    unassigned
+GigabitEthernet0/2         [administratively down/down]
+    unassigned
+Serial0/0/0                [up/up]
+    FE80::20B:BEFF:FED7:4901
+Serial0/0/1                [up/up]
+    FE80::20B:BEFF:FED7:4901
+Vlan1                      [administratively down/down]
+    unassigned
+R2(config)#
