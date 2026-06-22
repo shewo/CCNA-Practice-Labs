@@ -1,0 +1,134 @@
+R1>en
+R1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#router ospf 1
+R1(config-router)#net 172.16.0.0 0.0.255.255 area 0
+R1(config-router)#net 203.0.113.0 0.0.0.3 area 0
+R1(config-router)#do sh ip ospf int
+
+GigabitEthernet0/0 is up, line protocol is up
+  Internet address is 172.16.1.254/24, Area 0
+  Process ID 1, Router ID 203.0.113.1, Network Type BROADCAST, Cost: 1
+  Transmit Delay is 1 sec, State WAITING, Priority 1
+  No designated router on this network
+  No backup designated router on this network
+  Timer intervals configured, Hello 10, Dead 40, Wait 40, Retransmit 5
+    Hello due in 00:00:07
+  Index 1/1, flood queue length 0
+  Next 0x0(0)/0x0(0)
+  Last flood scan length is 1, maximum is 1
+  Last flood scan time is 0 msec, maximum is 0 msec
+  Neighbor Count is 0, Adjacent neighbor count is 0
+  Suppress hello for 0 neighbor(s)
+GigabitEthernet0/1 is up, line protocol is up
+  Internet address is 172.16.2.254/24, Area 0
+  Process ID 1, Router ID 203.0.113.1, Network Type BROADCAST, Cost: 1
+  Transmit Delay is 1 sec, State WAITING, Priority 1
+  No designated router on this network
+  No backup designated router on this network
+  Timer intervals configured, Hello 10, Dead 40, Wait 40, Retransmit 5
+    Hello due in 00:00:07
+  Index 2/2, flood queue length 0
+  Next 0x0(0)/0x0(0)
+  Last flood scan length is 1, maximum is 1
+  Last flood scan time is 0 msec, maximum is 0 msec
+  Neighbor Count is 0, Adjacent neighbor count is 0
+  Suppress hello for 0 neighbor(s)
+Serial0/0/0 is up, line protocol is up
+  Internet address is 203.0.113.1/30, Area 0
+  Process ID 1, Router ID 203.0.113.1, Network Type POINT-TO-POINT, Cost: 64
+  Transmit Delay is 1 sec, State POINT-TO-POINT,
+  Timer intervals configured, Hello 10, Dead 40, Wait 40, Retransmit 5
+    Hello due in 00:00:08
+  Index 3/3, flood queue length 0
+  Next 0x0(0)/0x0(0)
+  Last flood scan length is 1, maximum is 1
+  Last flood scan time is 0 msec, maximum is 0 msec
+  Suppress hello for 0 neighbor(s)
+R1(config-router)#
+20:35:29: %OSPF-5-ADJCHG: Process 1, Nbr 203.0.113.2 on Serial0/0/0 from LOADING to FULL, Loading Done
+
+R1(config-router)#do sh ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - IS-IS, L1 - IS-IS level-1, L2 - IS-IS level-2, ia - IS-IS inter area
+       * - candidate default, U - per-user static route, o - ODR
+       P - periodic downloaded static route
+
+Gateway of last resort is not set
+
+     172.16.0.0/16 is variably subnetted, 4 subnets, 2 masks
+C       172.16.1.0/24 is directly connected, GigabitEthernet0/0
+L       172.16.1.254/32 is directly connected, GigabitEthernet0/0
+C       172.16.2.0/24 is directly connected, GigabitEthernet0/1
+L       172.16.2.254/32 is directly connected, GigabitEthernet0/1
+O    192.168.1.0/24 [110/65] via 203.0.113.2, 00:01:48, Serial0/0/0
+O    192.168.2.0/24 [110/65] via 203.0.113.2, 00:01:48, Serial0/0/0
+     203.0.113.0/24 is variably subnetted, 2 subnets, 2 masks
+C       203.0.113.0/30 is directly connected, Serial0/0/0
+L       203.0.113.1/32 is directly connected, Serial0/0/0
+
+R1(config-router)#
+
+
+
+
+
+
+
+
+R1 con0 is now available
+
+
+
+
+
+
+Press RETURN to get started.
+
+
+
+
+
+
+
+
+
+
+
+
+
+R1>en
+R1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#access-list 1 deny 172.16.1.0 0.0.0.255
+R1(config)#access-list 1 permit any
+R1(config)#access-list 2 deny 172.16.2.0 0.0.0.255
+R1(config)#access-list 2 permit any
+R1(config)#do sh access-list
+Standard IP access list 1
+    10 deny 172.16.1.0 0.0.0.255
+    20 permit any
+Standard IP access list 2
+    10 deny 172.16.2.0 0.0.0.255
+    20 permit any
+
+R1(config)#int g0/1
+R1(config-if)#ip access-list 1 out
+                        ^
+% Invalid input detected at '^' marker.
+	
+R1(config-if)#ip access-group 1 out
+R1(config-if)#int g0/0
+R1(config-if)#ip access-group 2 out
+R1(config-if)#do sh access-list
+Standard IP access list 1
+    10 deny 172.16.1.0 0.0.0.255 (9 match(es))
+    20 permit any
+Standard IP access list 2
+    10 deny 172.16.2.0 0.0.0.255
+    20 permit any
+
+R1(config-if)#

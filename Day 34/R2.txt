@@ -1,0 +1,113 @@
+R2>en
+R2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R2(config)#router ospf 1
+R2(config-router)#net 192.168.0.0 0.0.255.255 area 0
+R2(config-router)#net 203.0.113.0 0.0.0.3 area 0
+R2(config-router)#
+20:35:29: %OSPF-5-ADJCHG: Process 1, Nbr 203.0.113.1 on Serial0/0/0 from LOADING to FULL, Loading Done
+
+R2(config-router)#sh ip ospf int
+                  ^
+% Invalid input detected at '^' marker.
+	
+R2(config-router)#do sh ip ospf int
+
+GigabitEthernet0/0 is up, line protocol is up
+  Internet address is 192.168.1.254/24, Area 0
+  Process ID 1, Router ID 203.0.113.2, Network Type BROADCAST, Cost: 1
+  Transmit Delay is 1 sec, State DR, Priority 1
+  Designated Router (ID) 203.0.113.2, Interface address 192.168.1.254
+  No backup designated router on this network
+  Timer intervals configured, Hello 10, Dead 40, Wait 40, Retransmit 5
+    Hello due in 00:00:05
+  Index 1/1, flood queue length 0
+  Next 0x0(0)/0x0(0)
+  Last flood scan length is 1, maximum is 1
+  Last flood scan time is 0 msec, maximum is 0 msec
+  Neighbor Count is 0, Adjacent neighbor count is 0
+  Suppress hello for 0 neighbor(s)
+GigabitEthernet0/1 is up, line protocol is up
+  Internet address is 192.168.2.254/24, Area 0
+  Process ID 1, Router ID 203.0.113.2, Network Type BROADCAST, Cost: 1
+  Transmit Delay is 1 sec, State DR, Priority 1
+  Designated Router (ID) 203.0.113.2, Interface address 192.168.2.254
+  No backup designated router on this network
+  Timer intervals configured, Hello 10, Dead 40, Wait 40, Retransmit 5
+    Hello due in 00:00:05
+  Index 2/2, flood queue length 0
+  Next 0x0(0)/0x0(0)
+  Last flood scan length is 1, maximum is 1
+  Last flood scan time is 0 msec, maximum is 0 msec
+  Neighbor Count is 0, Adjacent neighbor count is 0
+  Suppress hello for 0 neighbor(s)
+Serial0/0/0 is up, line protocol is up
+  Internet address is 203.0.113.2/30, Area 0
+  Process ID 1, Router ID 203.0.113.2, Network Type POINT-TO-POINT, Cost: 64
+  Transmit Delay is 1 sec, State POINT-TO-POINT,
+  Timer intervals configured, Hello 10, Dead 40, Wait 40, Retransmit 5
+    Hello due in 00:00:04
+  Index 3/3, flood queue length 0
+  Next 0x0(0)/0x0(0)
+  Last flood scan length is 1, maximum is 1
+  Last flood scan time is 0 msec, maximum is 0 msec
+  Neighbor Count is 1 , Adjacent neighbor count is 1
+    Adjacent with neighbor 203.0.113.1
+  Suppress hello for 0 neighbor(s)
+R2(config-router)#do sh ip ospf negh
+sh ip ospf negh
+             ^
+% Invalid input detected at '^' marker.
+	
+R2(config-router)#do sh ip ospf neigh
+
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+203.0.113.1       0   FULL/  -        00:00:31    203.0.113.1     Serial0/0/0
+R2(config-router)#do sh ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - IS-IS, L1 - IS-IS level-1, L2 - IS-IS level-2, ia - IS-IS inter area
+       * - candidate default, U - per-user static route, o - ODR
+       P - periodic downloaded static route
+
+Gateway of last resort is not set
+
+     172.16.0.0/24 is subnetted, 2 subnets
+O       172.16.1.0/24 [110/65] via 203.0.113.1, 00:01:29, Serial0/0/0
+O       172.16.2.0/24 [110/65] via 203.0.113.1, 00:01:29, Serial0/0/0
+     192.168.1.0/24 is variably subnetted, 2 subnets, 2 masks
+C       192.168.1.0/24 is directly connected, GigabitEthernet0/0
+L       192.168.1.254/32 is directly connected, GigabitEthernet0/0
+     192.168.2.0/24 is variably subnetted, 2 subnets, 2 masks
+C       192.168.2.0/24 is directly connected, GigabitEthernet0/1
+L       192.168.2.254/32 is directly connected, GigabitEthernet0/1
+     203.0.113.0/24 is variably subnetted, 2 subnets, 2 masks
+C       203.0.113.0/30 is directly connected, Serial0/0/0
+L       203.0.113.2/32 is directly connected, Serial0/0/0
+
+R2(config-router)#ip access-list standard TO_192.168.1.0/24
+R2(config-std-nacl)#permit 172.16.1.1
+R2(config-std-nacl)#permit 172.16.2.1
+R2(config-std-nacl)#deny any
+R2(config-std-nacl)#
+R2(config-std-nacl)#int g0/0
+R2(config-if)#ip access-group TO_192.168.1.0/24 out
+R2(config-if)#ip access-list standard TO_192.168.2.0/24
+R2(config-std-nacl)#deny 172.16.2.0 0.0.0.255
+R2(config-std-nacl)#permit any
+R2(config-std-nacl)#
+R2(config-std-nacl)#int g0/1
+R2(config-if)#ip access-group TO_192.168.2.0/24 out
+R2(config-if)#do sh access-list
+Standard IP access list TO_192.168.1.0/24
+    10 permit host 172.16.1.1 (4 match(es))
+    20 permit host 172.16.2.1 (4 match(es))
+    30 deny any (4 match(es))
+Standard IP access list TO_192.168.2.0/24
+    10 deny 172.16.2.0 0.0.0.255 (8 match(es))
+    20 permit any (4 match(es))
+
+R2(config-if)#
