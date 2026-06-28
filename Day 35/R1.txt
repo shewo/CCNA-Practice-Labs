@@ -1,0 +1,32 @@
+R1>en
+R1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#ip access-list extended 100
+R1(config-ext-nacl)#deny udp 172.16.1.0 0.0.0.255 host 192.168.1.100 eq 53
+R1(config-ext-nacl)#deny tcp 172.16.1.0 0.0.0.255 host 192.168.1.100 eq 53
+R1(config-ext-nacl)#permit ip any any
+R1(config-ext-nacl)#
+R1(config-ext-nacl)#int g0/0
+R1(config-if)#ip access-group 100 in
+R1(config-if)#
+R1(config-if)#
+R1(config-if)#ip access-list extended 101
+R1(config-ext-nacl)#deny ip 172.16.2.0 0.0.0.255 host 172.16.1.1
+R1(config-ext-nacl)#
+R1(config-ext-nacl)#deny tcp 172.16.2.0 0.0.0.255 host 192.168.2.100 eq 80
+R1(config-ext-nacl)#deny tcp 172.16.2.0 0.0.0.255 host 192.168.2.100 eq 443
+R1(config-ext-nacl)#permit ip any any
+R1(config-ext-nacl)#
+R1(config-ext-nacl)#int g0/1
+R1(config-if)#ip access-group 101 in
+R1(config-if)#
+R1(config-if)#do sh access-list
+Extended IP access list 100
+    10 deny udp 172.16.1.0 0.0.0.255 host 192.168.1.100 eq domain (8 match(es))
+    20 deny tcp 172.16.1.0 0.0.0.255 host 192.168.1.100 eq domain
+    30 permit ip any any (7 match(es))
+Extended IP access list 101
+    10 deny ip 172.16.2.0 0.0.0.255 host 172.16.1.1 (4 match(es))
+    20 deny tcp 172.16.2.0 0.0.0.255 host 192.168.2.100 eq www (12 match(es))
+    30 deny tcp 172.16.2.0 0.0.0.255 host 192.168.2.100 eq 443
+    40 permit ip any any (7 match(es))
