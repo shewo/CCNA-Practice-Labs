@@ -1,0 +1,10 @@
+R3>en
+R3#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R3(config)#no cdp run
+R3(config)#
+R3(config)#lldp run
+R3(config)#int range g0/0 - 2
+R3(config-if-range)#lldp transmit
+R3(config-if-range)#lldp receive
+R3(config-if-range)#
