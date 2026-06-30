@@ -1,0 +1,70 @@
+R2>en
+R2#clock set 12:00:00 Dec 30 2020
+R2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R2(config)#clock timezone SLST 6
+R2(config)#do sh clock de
+18:0:41.892 SLST Wed Dec 30 2020
+Time source is user configuration
+R2(config)#
+
+
+
+
+
+
+
+
+R2 con0 is now available
+
+
+
+
+
+
+Press RETURN to get started.
+
+
+
+
+
+
+
+
+
+
+
+
+
+R2>en
+R2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R2(config)#ntp authentication-key 1 md5 jeremysit
+R2(config)#ntp trusted-key 1
+R2(config)#
+R2(config)#ntp server 192.168.12.1 key 1
+R2(config)#
+R2(config)#end
+R2#
+%SYS-5-CONFIG_I: Configured from console by console
+
+R2#sh ntp assoc
+
+address         ref clock       st   when     poll    reach  delay          offset            disp
+ ~192.168.12.1  1.1.1.1         2    1        16      37     0.00           -12137720.00      0.12
+ * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
+R2#sh clock de
+18:20:32.273 SLST Wed Dec 30 2020
+Time source is NTP
+R2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R2(config)#ntp update-calendar
+R2(config)#exit
+R2#
+%SYS-5-CONFIG_I: Configured from console by console
+
+R2#sh calender
+       ^
+% Invalid input detected at '^' marker.
+	
+R2#

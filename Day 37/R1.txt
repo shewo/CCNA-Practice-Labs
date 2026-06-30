@@ -1,0 +1,60 @@
+R1>en
+R1#clock set 12:00:00 Dec 30 2020
+R1#show clock detail
+12:0:12.412 UTC Wed Dec 30 2020
+Time source is user configuration
+R1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#clock timezone ?
+  WORD  name of time zone
+R1(config)#clock timezone SLST ?
+  <-23 - 23>  Hours offset from UTC
+R1(config)#clock timezone SLST 5.5
+                               ^
+% Invalid input detected at '^' marker.
+	
+R1(config)#clock timezone SLST 6
+R1(config)#do sh clock detail
+18:4:29.585 SLST Wed Dec 30 2020
+Time source is user configuration
+R1(config)#
+R1(config)#ntp server 1.1.1.1
+R1(config)#do sh ntp associations
+
+address         ref clock       st   when     poll    reach  delay          offset            disp
+ ~1.1.1.1       .INIT.          16   -        64      0      0.00           0.00              0.01
+ * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
+R1(config)#
+R1(config)#do sh ntp associations
+
+address         ref clock       st   when     poll    reach  delay          offset            disp
+ ~1.1.1.1       127.127.1.1     1    6        16      37     0.00           -12458336.00      0.12
+ * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
+R1(config)#sh ntp status
+            ^
+% Invalid input detected at '^' marker.
+	
+R1(config)#do sh ntp status
+Clock is synchronized, stratum 2, reference is 1.1.1.1
+nominal freq is 250.0000 Hz, actual freq is 249.9990 Hz, precision is 2**24
+reference time is E369E913.00000240 (8:42:59.576 UTC Wed Dec 30 2020)
+clock offset is 0.00 msec, root delay is 0.00  msec
+root dispersion is 21.57 msec, peer dispersion is 0.12 msec.
+loopfilter state is 'CTRL' (Normal Controlled Loop), drift is - 0.000001193 s/s system poll interval is 4, last update was 16 sec ago.
+R1(config)#sh clock de
+            ^
+% Invalid input detected at '^' marker.
+	
+R1(config)#do sh clock de
+14:52:10.848 SLST Wed Dec 30 2020
+Time source is NTP
+R1(config)#
+R1(config)#ntp master
+R1(config)#
+R1(config)#ntp authentication
+% Incomplete command.
+R1(config)#ntp authentication-key 1 md5 jeremysit
+R1(config)#ntp trusted-key 1
+R1(config)#
+R1(config)#ntp update-calendar
+R1(config)#

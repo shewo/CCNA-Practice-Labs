@@ -1,0 +1,91 @@
+R3>en
+R3#clock set 12:00:00 Dec 30 2020
+R3#clock timezone SLST 6
+         ^
+% Invalid input detected at '^' marker.
+	
+R3#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R3(config)#clock timezone SLST 6
+R3(config)#do sh clock de
+18:0:41.48 SLST Wed Dec 30 2020
+Time source is user configuration
+R3(config)#
+
+
+
+
+
+
+
+
+R3 con0 is now available
+
+
+
+
+
+
+Press RETURN to get started.
+
+
+
+
+
+
+
+
+
+
+
+
+
+R3>en
+R3#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R3(config)#ntp authentication-key 1 md5 jetemysit
+R3(config)#ntp trusted-key 1
+R3(config)#ntp server 192.168.13.1 key 1
+R3(config)#ntp update-calendar
+R3(config)#
+R3(config)#
+R3(config)#exit
+R3#
+%SYS-5-CONFIG_I: Configured from console by console
+
+R3#en
+R3#sh ntp ass
+
+address         ref clock       st   when     poll    reach  delay          offset            disp
+ ~192.168.13.1  .AUTH.          16   -        64      0      0.00           0.00              16000.00
+ * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
+R3#sh ntp ass
+
+address         ref clock       st   when     poll    reach  delay          offset            disp
+ ~192.168.13.1  .AUTH.          16   -        64      0      0.00           0.00              16000.00
+ * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
+R3#sh clock deta
+18:22:14.952 SLST Wed Dec 30 2020
+Time source is NTP
+R3#sh ntp ass
+
+address         ref clock       st   when     poll    reach  delay          offset            disp
+ ~192.168.13.1  .AUTH.          16   -        64      0      0.00           0.00              16000.00
+ * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
+R3#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R3(config)#ntp authentication-key 1 md5 jeremysit
+R3(config)#sh ntp ass
+            ^
+% Invalid input detected at '^' marker.
+	
+R3(config)#exit
+R3#
+%SYS-5-CONFIG_I: Configured from console by console
+
+R3#sh ntp ass
+
+address         ref clock       st   when     poll    reach  delay          offset            disp
+ ~192.168.13.1  1.1.1.1         2    7        16      7      0.00           -12055952.00      0.12
+ * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
+R3#
