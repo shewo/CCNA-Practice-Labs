@@ -1,0 +1,50 @@
+R1>en
+R1#ip route 0.0.0.0 0.0.0.0 203.0.113.2
+      ^
+% Invalid input detected at '^' marker.
+	
+R1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#ip route 0.0.0.0 0.0.0.0 203.0.113.2
+R1(config)#do ping 1.1.1.1
+
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 1.1.1.1, timeout is 2 seconds:
+..!!!
+Success rate is 60 percent (3/5), round-trip min/avg/max = 0/6/18 ms
+
+R1(config)#do ping 1.1.1.1
+
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 1.1.1.1, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 0/0/2 ms
+
+R1(config)#ip name-server 1.1.1.1
+R1(config)#ip host R1 192.168.0.254
+R1(config)#ip host PC1 192.168.0.1
+R1(config)#ip host PC2 192.168.0.2
+R1(config)#ip host PC3 192.168.0.3
+R1(config)#
+R1(config)#do sh hosts
+Default Domain is not set
+Name/address lookup uses domain service
+Name servers are 1.1.1.1
+
+Codes: UN - unknown, EX - expired, OK - OK, ?? - revalidate
+       temp - temporary, perm - permanent
+       NA - Not Applicable None - Not defined
+
+Host                      Port  Flags      Age Type   Address(es)
+PC1                       None  (perm, OK)  0   IP      192.168.0.1
+PC2                       None  (perm, OK)  0   IP      192.168.0.2
+PC3                       None  (perm, OK)  0   IP      192.168.0.3
+R1                        None  (perm, OK)  0   IP      192.168.0.254
+R1(config)#do ping PC1
+
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.168.0.1, timeout is 2 seconds:
+.!!!!
+Success rate is 80 percent (4/5), round-trip min/avg/max = 0/4/16 ms
+
+R1(config)#
