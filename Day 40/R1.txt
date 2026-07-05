@@ -1,0 +1,18 @@
+R1>en
+R1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#snmp-server?
+snmp-server  
+R1(config)#snmp-server ?
+  community  Enable SNMP; set community string and access privs
+R1(config)#snmp-server community Cisco ro
+%SNMP-5-WARMSTART: SNMP agent on host R1 is undergoing a warm start
+R1(config)#snmp-server community Cisco2 rw
+R1(config)#\
+           ^
+% Invalid input detected at '^' marker.
+	
+R11(config)#
+R11(config)#do sh run | include host
+hostname R11
+R11(config)#
