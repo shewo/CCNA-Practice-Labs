@@ -1,0 +1,163 @@
+Cisco Packet Tracer PC Command Line 1.0
+C:\>
+C:\>telnet 192.168.1.1
+Trying 192.168.1.1 ...Open
+
+
+User Access Verification
+
+Username: jeremy
+Password: 
+R1>en
+Password: 
+R1#
+R1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#int g0/1
+R1(config-if)#no shut
+
+R1(config-if)#do terminal monitor
+R1(config-if)#shut
+
+R1(config-if)#
+*Feb 28, 20:41:00.4141: %LINK-5-CHANGED: Interface GigabitEthernet0/1, changed state to administratively down
+R1(config-if)#
+R1(config-if)#do sh loggin
+Syslog logging: enabled (0 messages dropped, 0 messages rate-limited,
+          0 flushes, 0 overruns, xml disabled, filtering disabled)
+
+No Active Message Discriminator.
+
+
+No Inactive Message Discriminator.
+
+
+    Console logging: level debugging, 9 messages logged, xml disabled,
+          filtering disabled
+    Monitor logging: level debugging, 1 messages logged, xml disabled,
+          filtering disabled
+    Buffer logging:  level debugging, 0 messages logged, xml disabled,
+          filtering disabled
+
+    Logging Exception size (4096 bytes) 
+    Count and timestamp logging messages: disabled
+    Persistent logging: disabled
+
+No active filter modules.
+
+ESM: 0 messages dropped
+    Trap logging: level informational, 9 message lines logged
+
+Log Buffer (4096 bytes):
+
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0, changed state to up
+
+%LINK-5-CHANGED: Interface GigabitEthernet0/0, changed state to administratively down
+
+%LINK-5-CHANGED: Interface GigabitEthernet0/0, changed state to administratively down
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0, changed state to down
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0, changed state to down
+
+%LINK-5-CHANGED: Interface GigabitEthernet0/0, changed state to up
+
+%LINK-5-CHANGED: Interface GigabitEthernet0/0, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0, changed state to up
+
+%SYS-5-CONFIG_I: Configured from console by console
+
+%SYS-5-CONFIG_I: Configured from console by console
+
+*Feb 28, 20:39:10.3939: SYS-5-CONFIG_I: Configured from console by console
+
+*Feb 28, 20:39:10.3939: SYS-5-CONFIG_I: Configured from console by console
+
+*Feb 28, 20:40:27.4040: %LINK-3-UPDOWN: Interface GigabitEthernet0/1, changed state to down
+
+*Feb 28, 20:40:27.4040: %LINK-3-UPDOWN: Interface GigabitEthernet0/1, changed state to down
+
+*Feb 28, 20:41:00.4141: %LINK-5-CHANGED: Interface GigabitEthernet0/1, changed state to administratively down
+
+*Feb 28, 20:41:00.4141: %LINK-5-CHANGED: Interface GigabitEthernet0/1, changed state to administratively down
+
+*Feb 28, 20:41:00.4141: %LINK-5-CHANGED: Interface GigabitEthernet0/1, changed state to administratively down
+R1(config-if)#exit
+R1(config)#logging buffered 8192
+R1(config)#
+*Feb 28, 20:42:18.4242: SYS-5-LOG_CONFIG_CHANGE: Buffer logging: level debugging, xml disabled, filtering disabled, size (8192) 
+R1(config)#logging buffer 8192
+R1(config)#
+*Feb 28, 20:43:08.4343: SYS-5-LOG_CONFIG_CHANGE: Buffer logging: level debugging, xml disabled, filtering disabled, size (8192) 
+R1(config)#do dh loggin
+dh loggin
+   ^
+% Invalid input detected at '^' marker.
+	
+R1(config)#do dh logging
+dh logging
+   ^
+% Invalid input detected at '^' marker.
+	
+R1(config)#do sh logging
+Syslog logging: enabled (0 messages dropped, 0 messages rate-limited,
+          0 flushes, 0 overruns, xml disabled, filtering disabled)
+
+No Active Message Discriminator.
+
+
+No Inactive Message Discriminator.
+
+
+    Console logging: level debugging, 11 messages logged, xml disabled,
+          filtering disabled
+    Monitor logging: level debugging, 3 messages logged, xml disabled,
+          filtering disabled
+    Buffer logging:  level debugging, 0 messages logged, xml disabled,
+          filtering disabled
+
+    Logging Exception size (8192 bytes) 
+    Count and timestamp logging messages: disabled
+    Persistent logging: disabled
+
+No active filter modules.
+
+ESM: 0 messages dropped
+    Trap logging: level informational, 11 message lines logged
+
+Log Buffer (8192 bytes):
+
+
+*Feb 28, 20:43:08.4343: SYS-5-LOG_CONFIG_CHANGE: Buffer logging: level debugging, xml disabled, filtering disabled, size (8192) 
+
+*Feb 28, 20:43:08.4343: SYS-5-LOG_CONFIG_CHANGE: Buffer logging: level debugging, xml disabled, filtering disabled, size (8192) 
+
+*Feb 28, 20:43:08.4343: SYS-5-LOG_CONFIG_CHANGE: Buffer logging: level debugging, xml disabled, filtering disabled, size (8192) 
+R1(config)#
+R1(config)#logging host 192.168.1.100
+R1(config)#logging trap debugging
+R1(config)#exit
+R1#
+*Feb 28, 20:44:59.4444: SYS-5-CONFIG_I: Configured from console by console
+*Feb 28, 20:44:59.4444:  %SYS-6-LOGGINGHOST_STARTSTOP: Logging to host 192.168.1.100 port 514 started - CLI initiated
+R1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#int g0/1
+R1(config-if)#no shut
+
+R1(config-if)#
+*Feb 28, 20:45:17.4545: %LINK-3-UPDOWN: Interface GigabitEthernet0/1, changed state to down
+R1(config-if)#shut
+
+R1(config-if)#
+*Feb 28, 20:45:20.4545: %LINK-5-CHANGED: Interface GigabitEthernet0/1, changed state to administratively down
+R1(config-if)#end
+R1#
+*Feb 28, 20:45:34.4545: SYS-5-CONFIG_I: Configured from console by console
+R1#
