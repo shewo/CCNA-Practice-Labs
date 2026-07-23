@@ -1,0 +1,199 @@
+R1>en
+R1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#class-map HTTPS_MAP
+R1(config-cmap)#match prot
+% Incomplete command.
+R1(config-cmap)#match protocol https
+R1(config-cmap)#exit
+R1(config)#
+R1(config)#class-map HTTP_MAP
+R1(config-cmap)#match protocol http
+R1(config-cmap)#exit
+R1(config)#
+R1(config)#class-map ICMP_MAP
+R1(config-cmap)#match protocol icmp
+R1(config-cmap)#exit
+R1(config)#
+R1(config)#do sh run | section class-map
+class-map match-all HTTPS_MAP
+ match protocol https
+class-map match-all HTTP_MAP
+ match protocol http
+class-map match-all ICMP_MAP
+ match protocol icmp
+R1(config)#
+R1(config)#
+R1(config)#policy-map G0/0/0_OUT
+R1(config-pmap)#?
+  class  policy criteria
+  exit   Exit from policy-map configuration mode
+  no     Negate or set default values of a command
+R1(config-pmap)#class HTTPS_MAP
+R1(config-pmap-c)#?
+  bandwidth       Bandwidth
+  exit            Exit from class action configuration mode
+  no              Negate or set default values of a command
+  priority        Strict Scheduling Priority for this Class
+  queue-limit     Queue Max Threshold for Tail Drop
+  random-detect   Enable Random Early Detection as drop policy
+  service-policy  Configure Flow Next
+  set             Set QoS values
+  shape           Traffic Shaping
+R1(config-pmap-c
+R1(config-pmap-c)#set ip dscp AF31
+R1(config-pmap-c)#prority percent 10
+                    ^
+% Invalid input detected at '^' marker.
+	
+R1(config-pmap-c)#priority percent 10
+R1(config-pmap-c)#exit
+R1(config-pmap)#clss HTTP_MAP
+                  ^
+% Invalid input detected at '^' marker.
+	
+R1(config-pmap)#class HTTP_MAP
+R1(config-pmap-c)#setip dscp af32
+                     ^
+% Invalid input detected at '^' marker.
+	
+R1(config-pmap-c)#set ip dscp af32
+R1(config-pmap-c)#bandwidth percent 10
+R1(config-pmap-c)#exit
+R1(config-pmap)#
+R1(config-pmap)#class ICMP_MAP
+R1(config-pmap-c)#set ip dscp cs2
+R1(config-pmap-c)#badwidth percent 5
+                    ^
+% Invalid input detected at '^' marker.
+	
+R1(config-pmap-c)#bandwidth percent 5
+R1(config-pmap-c)#exit
+R1(config-pmap)#
+R1(config-pmap)#do sh run | section policy-map
+policy-map G0/0/0_OUT
+ class HTTPS_MAP
+  priority percent 10
+  set ip dscp af31
+ class HTTP_MAP
+  bandwidth percent 10
+  set ip dscp af32
+ class ICMP_MAP
+  bandwidth percent 5
+  set ip dscp cs2
+R1(config-pmap)#int g0/0/0
+R1(config-if)#sercice-policy output G0/0/0_OUT
+                 ^
+% Invalid input detected at '^' marker.
+	
+R1(config-if)#service-policy output G0/0/0_OUT
+R1(config-if)#end
+R1#
+%SYS-5-CONFIG_I: Configured from console by console
+
+R1#sh running conf
+              ^
+% Invalid input detected at '^' marker.
+	
+R1#sh running-conf
+Building configuration...
+
+Current configuration : 1106 bytes
+!
+version 15.4
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname R1
+!
+!
+!
+!
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+!
+class-map match-all HTTPS_MAP
+ match protocol https
+class-map match-all HTTP_MAP
+ match protocol http
+class-map match-all ICMP_MAP
+ match protocol icmp
+!
+policy-map G0/0/0_OUT
+ class HTTPS_MAP
+  priority percent 10
+  set ip dscp af31
+ class HTTP_MAP
+  bandwidth percent 10
+  set ip dscp af32
+ class ICMP_MAP
+  bandwidth percent 5
+  set ip dscp cs2
+!
+!
+!
+!
+!
+interface GigabitEthernet0/0/0
+ ip address 172.16.0.1 255.255.255.252
+ service-policy output G0/0/0_OUT
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/0/1
+ ip address 192.168.0.1 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/0/2
+ media-type sfp
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip classless
+ip route 0.0.0.0 0.0.0.0 172.16.0.2 
+!
+ip flow-export version 9
+!
+!
+!
+!
+!
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+!
+end
