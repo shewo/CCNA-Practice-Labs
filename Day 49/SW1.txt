@@ -1,0 +1,95 @@
+SW1>en
+SW1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+SW1(config)#int range f0/1 - 3
+SW1(config-if-range)#switchport port-security aging time 60
+SW1(config-if-range)#
+SW1(config-if-range)#switchport port-security
+Command rejected: FastEthernet0/1 is a dynamic port.
+Command rejected: FastEthernet0/2 is a dynamic port.
+Command rejected: FastEthernet0/3 is a dynamic port.
+SW1(config-if-range)#
+SW1(config-if-range)#do sh int f0/1
+FastEthernet0/1 is up, line protocol is up (connected)
+  Hardware is Lance, address is 0060.471c.1d01 (bia 0060.471c.1d01)
+ BW 100000 Kbit, DLY 100 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive set (10 sec)
+  Full-duplex, 100Mb/s
+  input flow-control is off, output flow-control is off
+  ARP type: ARPA, ARP Timeout 00:04:00
+  Last input 00:00:08, output 00:00:05, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue :0/40 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     956 packets input, 193351 bytes, 0 no buffer
+     Received 956 broadcasts, 0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored, 0 abort
+     0 watchdog, 0 multicast, 0 pause input
+     0 input packets with dribble condition detected
+     2357 packets output, 263570 bytes, 0 underruns
+     0 output errors, 0 collisions, 10 interface resets
+     0 babbles, 0 late collision, 0 deferred
+     0 lost carrier, 0 no carrier
+     0 output buffer failures, 0 output buffers swapped out
+
+SW1(config-if-range)#sw mode access
+SW1(config-if-range)#switchport port-security
+SW1(config-if-range)#do sh port-security int f0/1
+Port Security              : Enabled
+Port Status                : Secure-up
+Violation Mode             : Shutdown
+Aging Time                 : 60 mins
+Aging Type                 : Absolute
+SecureStatic Address Aging : Disabled
+Maximum MAC Addresses      : 1
+Total MAC Addresses        : 0
+Configured MAC Addresses   : 0
+Sticky MAC Addresses       : 0
+Last Source Address:Vlan   : 0000.0000.0000:0
+Security Violation Count   : 0
+
+SW1(config-if-range)#
+SW1(config-if-range)#int vlan 1
+SW1(config-if)#
+SW1(config-if)#ip add 10.0.0.10 255.255.255.0
+SW1(config-if)#no shut
+
+SW1(config-if)#
+%LINK-3-UPDOWN: Interface Vlan1, changed state to down
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface Vlan1, changed state to up
+
+SW1(config-if)#do ping 10.0.0.254
+
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 10.0.0.254, timeout is 2 seconds:
+.....
+Success rate is 0 percent (0/5)
+
+SW1(config-if)#
+%LINK-5-CHANGED: Interface FastEthernet0/1, changed state to administratively down
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/1, changed state to down
+%PM-4-ERR_DISABLE: psecure-violation error detected on Fa0/1, putting Fa0/1 in err-disable state.
+%PORT_SECURITY-2-PSECURE_VIOLATION: Security violation occurred, caused by MAC address 0001.0001.000A on port FastEthernet0/1.
+
+SW1(config-if)#do sh port-sec int f0/1
+Port Security              : Enabled
+Port Status                : Secure-shutdown
+Violation Mode             : Shutdown
+Aging Time                 : 60 mins
+Aging Type                 : Absolute
+SecureStatic Address Aging : Disabled
+Maximum MAC Addresses      : 1
+Total MAC Addresses        : 0
+Configured MAC Addresses   : 0
+Sticky MAC Addresses       : 0
+Last Source Address:Vlan   : 0001.0001.000A:1
+Security Violation Count   : 1
+
+SW1(config-if)#

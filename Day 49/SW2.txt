@@ -1,0 +1,167 @@
+SW2>en
+SW2#
+SW2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+SW2(config)#int g0/1
+SW2(config-if)#sw port-security violation restrict
+SW2(config-if)#sw port-security maximum 4
+SW2(config-if)#
+SW2(config-if)#sw port-security mac-address sticky
+SW2(config-if)#
+SW2(config-if)#sw mode access
+SW2(config-if)#sw port-security
+SW2(config-if)#
+SW2(config-if)#do sh port-security int g0/1
+Port Security              : Enabled
+Port Status                : Secure-up
+Violation Mode             : Restrict
+Aging Time                 : 0 mins
+Aging Type                 : Absolute
+SecureStatic Address Aging : Disabled
+Maximum MAC Addresses      : 4
+Total MAC Addresses        : 0
+Configured MAC Addresses   : 0
+Sticky MAC Addresses       : 0
+Last Source Address:Vlan   : 0000.0000.0000:0
+Security Violation Count   : 0
+
+SW2(config-if)#do sh port-security int g0/1
+Port Security              : Enabled
+Port Status                : Secure-up
+Violation Mode             : Restrict
+Aging Time                 : 0 mins
+Aging Type                 : Absolute
+SecureStatic Address Aging : Disabled
+Maximum MAC Addresses      : 4
+Total MAC Addresses        : 4
+Configured MAC Addresses   : 0
+Sticky MAC Addresses       : 4
+Last Source Address:Vlan   : 0060.471C.1D19:1
+Security Violation Count   : 0
+
+SW2(config-if)#do sh run
+Building configuration...
+
+Current configuration : 1519 bytes
+!
+version 15.0
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname SW2
+!
+!
+!
+!
+!
+!
+no spanning-tree vlan 1
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+interface FastEthernet0/1
+!
+interface FastEthernet0/2
+!
+interface FastEthernet0/3
+!
+interface FastEthernet0/4
+!
+interface FastEthernet0/5
+!
+interface FastEthernet0/6
+!
+interface FastEthernet0/7
+!
+interface FastEthernet0/8
+!
+interface FastEthernet0/9
+!
+interface FastEthernet0/10
+!
+interface FastEthernet0/11
+!
+interface FastEthernet0/12
+!
+interface FastEthernet0/13
+!
+interface FastEthernet0/14
+!
+interface FastEthernet0/15
+!
+interface FastEthernet0/16
+!
+interface FastEthernet0/17
+!
+interface FastEthernet0/18
+!
+interface FastEthernet0/19
+!
+interface FastEthernet0/20
+!
+interface FastEthernet0/21
+!
+interface FastEthernet0/22
+!
+interface FastEthernet0/23
+!
+interface FastEthernet0/24
+!
+interface GigabitEthernet0/1
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 4
+ switchport port-security mac-address sticky 
+ switchport port-security violation restrict 
+ switchport port-security mac-address sticky 0001.0001.0001
+ switchport port-security mac-address sticky 0002.0002.0002
+ switchport port-security mac-address sticky 0003.0003.0003
+ switchport port-security mac-address sticky 0060.471C.1D19
+!
+interface GigabitEthernet0/2
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+!
+!
+!
+line con 0
+!
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+!
+!
+!
+end
+
+
+SW2(config-if)#do sh mac-address-table
+          Mac Address Table
+-------------------------------------------
+
+Vlan    Mac Address       Type        Ports
+----    -----------       --------    -----
+
+   1    0001.0001.0001    STATIC      Gig0/1
+   1    0002.0002.0002    STATIC      Gig0/1
+   1    0003.0003.0003    STATIC      Gig0/1
+   1    0060.471c.1d19    STATIC      Gig0/1
+   1    00e0.b0d8.7e01    DYNAMIC     Gig0/2
+SW2(config-if)#do sh port-security
+Secure Port MaxSecureAddr CurrentAddr SecurityViolation Security Action
+               (Count)       (Count)        (Count)
+--------------------------------------------------------------------
+       Gig0/1        4          4                 0         Restrict
+----------------------------------------------------------------------
+SW2(config-if)#%PORT_SECURITY-2-PSECURE_VIOLATION: Security violation occurred, caused by MAC address 0060.7024.2366 on port GigabitEthernet0/1.
+%PORT_SECURITY-2-PSECURE_VIOLATION: Security violation occurred, caused by MAC address 0060.7024.2366 on port GigabitEthernet0/1.
+%PORT_SECURITY-2-PSECURE_VIOLATION: Security violation occurred, caused by MAC address 0060.7024.2366 on port GigabitEthernet0/1.
+%PORT_SECURITY-2-PSECURE_VIOLATION: Security violation occurred, caused by MAC address 0060.7024.2366 on port GigabitEthernet0/1.
+%PORT_SECURITY-2-PSECURE_VIOLATION: Security violation occurred, caused by MAC address 0060.7024.2366 on port GigabitEthernet0/1.
+%PORT_SECURITY-2-PSECURE_VIOLATION: Security violation occurred, caused by MAC address 0060.7024.2366 on port GigabitEthernet0/1.
