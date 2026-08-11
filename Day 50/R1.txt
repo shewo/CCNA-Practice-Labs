@@ -1,0 +1,19 @@
+R1>en
+R1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#ip dhcp?
+dhcp  
+R1(config)#ip dhcp ?
+  excluded-address  Prevent DHCP from assigning certain addresses
+  pool              Configure DHCP address pools
+  relay             DHCP relay agent parameters
+R1(config)#ip dhcp excluded-address 192.168.1.1 192.168.1.9
+R1(config)#ip dhcp POOL1
+                       ^
+% Invalid input detected at '^' marker.
+	
+R1(config)#ip dhcp pool POOL1
+R1(dhcp-config)#network 192.168.1.0 255.255.255.0
+R1(dhcp-config)#
+R1(dhcp-config)#default-router 192.168.1.1
+R1(dhcp-config)#

@@ -1,0 +1,11 @@
+SW2>en
+SW2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+SW2(config)#ip dhcp snooping
+SW2(config)#ip dhcp snooping vlan 1
+SW2(config)#int g0/1
+SW2(config-if)#ip dhcp snooping trust
+SW2(config-if)#exit
+SW2(config)#
+SW2(config)#no ip dhcp snooping information option
+SW2(config)#

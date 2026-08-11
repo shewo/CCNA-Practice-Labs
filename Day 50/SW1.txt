@@ -1,0 +1,29 @@
+SW1>en
+SW1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+SW1(config)#ip dhcp snooping
+SW1(config)#ip dhcp snooping ?
+  database     DHCP Snooping database agent
+  information  DHCP Snooping information
+  verify       DHCP Snooping verify
+  vlan         DHCP Snooping vlan
+  <cr>
+SW1(config)#ip dhcp snooping vlan 1
+SW1(config)#int g0/2
+SW1(config-if)#ip dhcp snooping trust
+SW1(config-if)#exit
+SW1(config)#
+SW1(config)#20:35:37: %DHCP_SNOOPING-5-DHCP_SNOOPING_NONZERO_GIADDR: DHCP_SNOOPING drop message with non-zero giaddr or option82 value on untrusted port, message type: DHCP DISCOVER, MAC sa: 0001.6432.B922
+20:35:47: %DHCP_SNOOPING-5-DHCP_SNOOPING_NONZERO_GIADDR: DHCP_SNOOPING drop message with non-zero giaddr or option82 value on untrusted port, message type: DHCP DISCOVER, MAC sa: 0001.6432.B922
+20:35:57: %DHCP_SNOOPING-5-DHCP_SNOOPING_NONZERO_GIADDR: DHCP_SNOOPING drop message with non-zero giaddr or option82 value on untrusted port, message type: DHCP DISCOVER, MAC sa: 0001.6432.B922
+20:36:07: %DHCP_SNOOPING-5-DHCP_SNOOPING_NONZERO_GIADDR: DHCP_SNOOPING drop message with non-zero giaddr or option82 value on untrusted port, message type: DHCP DISCOVER, MAC sa: 0001.6432.B922
+20:36:15: %DHCP_SNOOPING-5-DHCP_SNOOPING_NONZERO_GIADDR: DHCP_SNOOPING drop message with non-zero giaddr or option82 value on untrusted port, message type: DHCP DISCOVER, MAC sa: 0001.6432.B922
+20:36:25: %DHCP_SNOOPING-5-DHCP_SNOOPING_NONZERO_GIADDR: DHCP_SNOOPING drop message with non-zero giaddr or option82 value on untrusted port, message type: DHCP DISCOVER, MAC sa: 0001.6432.B922
+
+SW1(config)#
+SW1(config)#no ip dhcp s20:36:35: %DHCP_SNOOPING-5-DHCP_SNOOPING_NONZERO_GIADDR: DHCP_SNOOPING drop message with non-zero giaddr or option82 value on untrusted port, message type: DHCP DISCOVER, MAC sa: 0001.6432.B922
+n20:36:45: %DHCP_SNOOPING-5-DHCP_SNOOPING_NONZERO_GIADDR: DHCP_SNOOPING drop message with non-zero giaddr or option82 value on untrusted port, message type: DHCP DISCOVER, MAC sa: 0001.6432.B922
+
+SW1(config)#
+SW1(config)#no ip dhcp snooping information option
+SW1(config)#
