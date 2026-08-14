@@ -1,0 +1,159 @@
+SW2>en
+SW2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+SW2(config)#ip dhcp snooping
+SW2(config)#ip dhcp snooping vlan 1
+SW2(config)#ip dhcp snooping information option
+SW2(config)#
+SW2(config)#int g0/1
+SW2(config-if)#ip dhcp snooping trust
+SW2(config-if)#exit
+SW2(config)#
+SW2(config)#ip arp inspecion vlan 1
+                         ^
+% Invalid input detected at '^' marker.
+	
+SW2(config)#ip arp inspection vlan 1
+SW2(config)#ip arp inspection validate dst-mac ip src-mac
+SW2(config)#int g0/1
+SW2(config-if)#ip arp inspection truct
+                                    ^
+% Invalid input detected at '^' marker.
+	
+SW2(config-if)#ip arp inspection trust
+SW2(config-if)#end
+SW2#
+%SYS-5-CONFIG_I: Configured from console by console
+
+SW2#show run
+Building configuration...
+
+Current configuration : 1238 bytes
+!
+version 15.0
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname SW2
+!
+!
+!
+!
+ip arp inspection vlan 1
+ip arp inspection validate src-mac dst-mac ip
+!
+ip dhcp snooping vlan 1
+ip dhcp snooping
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+interface FastEthernet0/1
+!
+interface FastEthernet0/2
+!
+interface FastEthernet0/3
+!
+interface FastEthernet0/4
+!
+interface FastEthernet0/5
+!
+interface FastEthernet0/6
+!
+interface FastEthernet0/7
+!
+interface FastEthernet0/8
+!
+interface FastEthernet0/9
+!
+interface FastEthernet0/10
+!
+interface FastEthernet0/11
+!
+interface FastEthernet0/12
+!
+interface FastEthernet0/13
+!
+interface FastEthernet0/14
+!
+interface FastEthernet0/15
+!
+interface FastEthernet0/16
+!
+interface FastEthernet0/17
+!
+interface FastEthernet0/18
+!
+interface FastEthernet0/19
+!
+interface FastEthernet0/20
+!
+interface FastEthernet0/21
+!
+interface FastEthernet0/22
+!
+interface FastEthernet0/23
+!
+interface FastEthernet0/24
+!
+interface GigabitEthernet0/1
+ ip arp inspection trust
+ ip dhcp snooping trust
+!
+interface GigabitEthernet0/2
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+!
+!
+!
+line con 0
+!
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+!
+!
+!
+end
+
+
+SW2#sh ip arp inspecion int
+                    ^
+% Invalid input detected at '^' marker.
+	
+SW2#sh ip arp inspection int
+Interface        Trust State     Rate(pps)    Burst Interval
+---------------  -----------     ---------    --------------
+Fa0/1            Untrusted              15                 1
+Fa0/2            Untrusted              15                 1
+Fa0/3            Untrusted              15                 1
+Fa0/4            Untrusted              15                 1
+Fa0/5            Untrusted              15                 1
+Fa0/6            Untrusted              15                 1
+Fa0/7            Untrusted              15                 1
+Fa0/8            Untrusted              15                 1
+Fa0/9            Untrusted              15                 1
+Fa0/10           Untrusted              15                 1
+Fa0/11           Untrusted              15                 1
+Fa0/12           Untrusted              15                 1
+Fa0/13           Untrusted              15                 1
+Fa0/14           Untrusted              15                 1
+Fa0/15           Untrusted              15                 1
+Fa0/16           Untrusted              15                 1
+Fa0/17           Untrusted              15                 1
+Fa0/18           Untrusted              15                 1
+Fa0/19           Untrusted              15                 1
+Fa0/20           Untrusted              15                 1
+Fa0/21           Untrusted              15                 1
+Fa0/22           Untrusted              15                 1
+Fa0/23           Untrusted              15                 1
+Fa0/24           Untrusted              15                 1
+Gig0/1           Trusted                15                 1
+Gig0/2           Untrusted              15                 1
+SW2#
