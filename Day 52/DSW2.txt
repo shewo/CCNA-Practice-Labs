@@ -1,0 +1,46 @@
+DSW2>en
+DSW2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+DSW2(config)#spanning-tree vlan 10 root secondary
+DSW2(config)#spanning-tree vlan 20 root primary
+DSW2(config)#
+DSW2(config)#
+DSW2(config)#int vlan 10
+DSW2(config-if)#standby version 2
+DSW2(config-if)#standby 10 ip 10.0.10.254
+DSW2(config-if)#
+%HSRP-6-STATECHANGE: Vlan10 Grp 10 state Init -> Init
+
+DSW2(config-if)#standby 10 priority 95
+DSW2(config-if)#\
+%HSRP-6-STATECHANGE: Vlan10 Grp 10 state Speak -> Standby
+DSW2(config-if)#standby 10 preempt
+DSW2(config-if)#int vlan 20
+DSW2(config-if)#
+DSW2(config-if)#standby ver 2
+DSW2(config-if)#standby 20 ip 10.0.20.254
+DSW2(config-if)#
+%HSRP-6-STATECHANGE: Vlan20 Grp 20 state Init -> Init
+
+DSW2(config-if)#
+DSW2(config-if)#standby 20 priority 
+%HSRP-6-STATECHANGE: Vlan20 Grp 20 state Speak -> Standby
+105
+DSW2(config-if)#
+DSW2(config-if)#standby 20 preempt
+DSW2(config-if)#
+DSW2(config-if)#
+ %HSRP-6-STATECHANGE: Vlan20 Grp 20 state Standby -> Active
+
+DSW2(config-if)#end
+DSW2#
+%SYS-5-CONFIG_I: Configured from console by console
+
+DSW2#
+DSW2#sh standby br
+                     P indicates configured to preempt.
+                     |
+Interface   Grp  Pri P State    Active          Standby         Virtual IP
+Vl10        10   95  P Standby  10.0.10.1       local           10.0.10.254    
+Vl20        20   105 P Active   local           10.0.20.1       10.0.20.254    
+DSW2#

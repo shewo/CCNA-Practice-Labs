@@ -1,0 +1,135 @@
+DSW1>en
+DSW1#show standby br
+                     P indicates configured to preempt.
+                     |
+Interface   Grp  Pri P State    Active          Standby         Virtual IP
+DSW1#
+DSW1#
+DSW1#sh spanning-tree vlan 10
+VLAN0010
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    32778
+             Address     0001.C912.B090
+             Cost        4
+             Port        3(GigabitEthernet1/0/3)
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32778  (priority 32768 sys-id-ext 10)
+             Address     000C.856A.50BD
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  20
+
+Interface        Role Sts Cost      Prio.Nbr Type
+---------------- ---- --- --------- -------- --------------------------------
+Gi1/0/2          Desg FWD 4         128.2    P2p
+Gi1/0/3          Root FWD 4         128.3    P2p
+Gi1/0/1          Desg FWD 4         128.1    P2p
+
+DSW1#sh spanning-tree vlan 20
+VLAN0020
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    32788
+             Address     0001.C912.B090
+             Cost        4
+             Port        3(GigabitEthernet1/0/3)
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32788  (priority 32768 sys-id-ext 20)
+             Address     000C.856A.50BD
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  20
+
+Interface        Role Sts Cost      Prio.Nbr Type
+---------------- ---- --- --------- -------- --------------------------------
+Gi1/0/2          Desg FWD 4         128.2    P2p
+Gi1/0/3          Root FWD 4         128.3    P2p
+Gi1/0/1          Desg FWD 4         128.1    P2p
+
+DSW1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+DSW1(config)#spanning-tree vlan 10 root primary
+DSW1(config)#spanning-tree vlan 20 root secondary
+DSW1(config)#do sh spanning-tree vlan 10
+VLAN0010
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    24586
+             Address     000C.856A.50BD
+             This bridge is the root
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    24586  (priority 24576 sys-id-ext 10)
+             Address     000C.856A.50BD
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  20
+
+Interface        Role Sts Cost      Prio.Nbr Type
+---------------- ---- --- --------- -------- --------------------------------
+Gi1/0/2          Desg FWD 4         128.2    P2p
+Gi1/0/3          Desg FWD 4         128.3    P2p
+Gi1/0/1          Desg FWD 4         128.1    P2p
+
+DSW1(config)#do sh spanning-tree vlan 20
+VLAN0020
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    28692
+             Address     000C.856A.50BD
+             This bridge is the root
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    28692  (priority 28672 sys-id-ext 20)
+             Address     000C.856A.50BD
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  20
+
+Interface        Role Sts Cost      Prio.Nbr Type
+---------------- ---- --- --------- -------- --------------------------------
+Gi1/0/2          Desg FWD 4         128.2    P2p
+Gi1/0/3          Desg FWD 4         128.3    P2p
+Gi1/0/1          Desg FWD 4         128.1    P2p
+
+DSW1(config)#int vlan 10
+DSW1(config-if)#standby version 2
+DSW1(config-if)#standby 10 ip 10.0.10.254
+DSW1(config-if)#
+%HSRP-6-STATECHANGE: Vlan10 Grp 10 state Init -> Init
+
+DSW1(config-if)#
+DSW1(config-if)#standby 10 priority 105
+DSW1(config-if)#
+%HSRP-6-STATECHANGE: Vlan10 Grp 10 state Speak -> Standby
+
+%HSRP-6-STATECHANGE: Vlan10 Grp 10 state Standby -> Active
+
+DSW1(config-if)#standby 10 preempt
+DSW1(config-if)#
+DSW1(config-if)#int vlan 20
+DSW1(config-if)#standby version 2
+DSW1(config-if)#standby 20 ip 10.0.20
+                              ^
+% Invalid input detected at '^' marker.
+	
+DSW1(config-if)#standby 20 ip 10.0.20.254
+DSW1(config-if)#
+%HSRP-6-STATECHANGE: Vlan20 Grp 20 state Init -> Init
+
+DSW1(config-if)#standby 20 priority 95
+DSW1(config-if)#standby 20 pre
+%HSRP-6-STATECHANGE: Vlan20 Grp 20 state Speak -> Standby
+
+%HSRP-6-STATECHANGE: Vlan20 Grp 20 state Standby -> Active
+empt
+DSW1(config-if)#standby 20 preempt
+DSW1(config-if)#end
+DSW1#
+%SYS-5-CONFIG_I: Configured from console by console
+
+DSW1#
+%HSRP-6-STATECHANGE: Vlan20 Grp 20 state Speak -> Standby
+
+DSW1#sh standby br
+                     P indicates configured to preempt.
+                     |
+Interface   Grp  Pri P State    Active          Standby         Virtual IP
+Vl10        10   105 P Active   local           10.0.10.2       10.0.10.254    
+Vl20        20   95  P Standby  10.0.20.2       local           10.0.20.254    
+DSW1#
